@@ -78,7 +78,11 @@ int main() {
 			std::cout << (char)(i) << " -> " << code[i] << "\n";
 	}
 
-	std::cout << "\nData:\n";
-	for (char c : s) std::cout << code[(int)c];
-	std::cout << "\n";
+	std::string data;
+	for (char c : s) data += code[(int)c];
+
+	std::cout << "\nData: " << data << "\n";
+	std::cout << "Length of data (in bits): " << data.size() << "\n";
+	std::cout << "Length of original message (in characters): " << s.size() << "\n";
+
 }
