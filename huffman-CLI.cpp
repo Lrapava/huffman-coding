@@ -18,7 +18,7 @@
 
 bool VISIBLE_ONLY = true;
 
-int charNum = (int)('~') - (int)('!'), charStart = (int)('!'), charEnd = (int)('~') + 1;
+int charNum = (int)('~') - (int)('!'), charStart = (int)('!'), charEnd = (int)('~') + 1, maxLen = 0;
 
 std::vector <std::string> GenerateCodes(std::string s) {
 	std::vector <std::pair <int, std::pair<int, int>>> graph;
@@ -59,6 +59,7 @@ std::vector <std::string> GenerateCodes(std::string s) {
 	for (int i = 0; i < 256; i++) {
 		res[i] = codes[i];
 		std::reverse(res[i].begin(), res[i].end());
+		maxLen = std::max(maxLen, (int)codes[i].size());
 	}
 
 	return res;
@@ -89,7 +90,7 @@ int main(int argc, char** argv) {
 	if (VISIBLE_ONLY) {
 		for (int i = charStart; i < charEnd; i++) {
 			std::cout << (char)(i) << " -> " << code[i] << "  ";
-			for (int j = code[i].size(); j < 11; j++) std::cout << " ";
+			for (int j = (int)code[i].size(); j < maxLen; j++) std::cout << " ";
 			if ((i - charStart) % 5 == 4) std::cout << "\n";
 		}
 	} else {
@@ -97,7 +98,11 @@ int main(int argc, char** argv) {
 			std::cout << (char)(i) << " -> " << code[i] << "\n";
 	}
 
-	std::cout << "\nData:\n";
-	for (char c : s) std::cout << code[(int)c];
-	std::cout << "\n";
+	std::string data;
+	for (char c : s) data += code[(int)c];
+
+	std::cout << "\nData: " << data << "\n";
+	std::cout << "Length of data (in bits): " << data.size() << "\n";
+	std::cout << "Length of original message (in characters): " << s.size() << "\n";
+	
 }
